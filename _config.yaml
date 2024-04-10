@@ -1,0 +1,5 @@
+plugins:
+  - jekyll-paginate
+paginate: 5
+title: 优秀文摘
+baseurl: "/reading"
