@@ -256,7 +256,7 @@ async def crawl(session: aiohttp.ClientSession):
         "aHR0cDovL3BhcGVyLnBlb3BsZS5jb20uY24vcm1yYi9wYXBlcmluZGV4Lmh0bQ=="
     )
     start_date = datetime.date.today()
-    end_date = start_date - datetime.timedelta(days=1)
+    end_date = datetime.date(2023, 11, 25)  # start_date - datetime.timedelta(days=1)
 
     while start_date >= end_date:
 
