@@ -90,7 +90,7 @@ layout: default
                         img.src = url;
                         img.alt = title;
                         newp.appendChild(img);
-                        p.parentNode.insertBefore(newp, p);
+                        p.parentNode.insertBefore(newp, p.nextSibling);
                     }
                 });
 
