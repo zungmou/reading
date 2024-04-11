@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const 标点符号 = '，。！？；：、（）《》“”‘’——…—·「」『』〈〉〔〕【】〖〗〘〙〚〛～1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+async function copyToClipboard(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch {
+    }
+}
+
 function 标注拼音(elements) {
     for (const p of elements) {
         const chars = p.textContent.split('');
@@ -26,6 +33,10 @@ function 标注拼音(elements) {
         }
 
         p.textContent = '';
+
+        p.addEventListener('click', function () {
+            copyToClipboard(this.textContent);
+        }.bind(p));
 
         for (const c of chars) {
             const ruby = document.createElement('ruby');
