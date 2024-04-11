@@ -168,10 +168,6 @@ body>.container>main>article>header>p {
     color: gray;
 }
 
-body>.container>main>article>header>p>img {
-    max-width: 50%;
-}
-
 body>.container>main>article>header>p>* {
     margin-right: 1em;
 }
@@ -189,6 +185,10 @@ body>.container>main>article>p {
     max-width: 100%;
     overflow: hidden;
     cursor: pointer;
+}
+
+body>.container>main>article>p>img {
+    max-width: 50%;
 }
 
 body>.container>main>article>p>span {
