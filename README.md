@@ -4,7 +4,7 @@
 
 > 仅以此项目献给我的家人
 
-# Features
+## Features
 
 - [√] 语音朗读
 - [√] 拼音显示
@@ -15,7 +15,7 @@
   - [Google Custom Search](https://programmablesearchengine.google.com/) *（国内无法使用）*
   - [lunr.js](https://lunrjs.com/) *（需要自行构建索引）*
 
-# Dependencies
+## Dependencies
 
 - [edge-tts](https://github.com/rany2/edge-tts)
 - [pinyin.js](https://github.com/sxei/pinyinjs)
