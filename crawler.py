@@ -242,7 +242,6 @@ async def crawl(session: aiohttp.ClientSession):
 
                 logger.info(f"文章 | {article_title} - {article_url}")
                 await crwal_article(article_url, url)
-                await asyncio.sleep(3)
 
                 del match, article_url, article_title
 
@@ -278,7 +277,6 @@ async def crawl(session: aiohttp.ClientSession):
             del resp_b, text
 
         start_date = start_date - datetime.timedelta(days=1)
-        await asyncio.sleep(5)
 
 
 async def main():
