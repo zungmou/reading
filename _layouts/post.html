@@ -79,7 +79,7 @@ layout: default
         let i = 0;
 
         for (const p of Array.from(document.querySelectorAll('article > p'))) {
-            const url = `{{ site.baseurl }}/illustration/${date}-${title}.${i}.webp`;
+            const url = `{{ site.baseurl }}/illustration/${date}-${title}.${i}.png`;
 
             // Try to request this image
             fetch(url)
