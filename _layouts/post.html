@@ -74,28 +74,28 @@ layout: default
         }
         document.getElementById('player').addEventListener('timeupdate', timeupdate);
 
-        const title = '{{ page.title }}';
-        const date = '{{ page.date | date: "%Y-%m-%d" }}';
-        let i = 0;
+        // const title = '{{ page.title }}';
+        // const date = '{{ page.date | date: "%Y-%m-%d" }}';
+        // let i = 0;
 
-        for (const p of Array.from(document.querySelectorAll('article > p'))) {
-            const url = `{{ site.baseurl }}/illustration/${date}-${title}.${i}.png`;
+        // for (const p of Array.from(document.querySelectorAll('article > p'))) {
+        //     const url = `{{ site.baseurl }}/illustration/${date}-${title}.${i}.png`;
 
-            // Try to request this image
-            fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        const newp = document.createElement('p');
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.alt = title;
-                        newp.appendChild(img);
-                        p.parentNode.insertBefore(newp, p.nextSibling);
-                    }
-                });
+        //     // Try to request this image
+        //     fetch(url)
+        //         .then(response => {
+        //             if (response.ok) {
+        //                 const newp = document.createElement('p');
+        //                 const img = document.createElement('img');
+        //                 img.src = url;
+        //                 img.alt = title;
+        //                 newp.appendChild(img);
+        //                 p.parentNode.insertBefore(newp, p.nextSibling);
+        //             }
+        //         });
 
-            i++;
-        }
+        //     i++;
+        // }
     </script>
     {% if page.comments %}
     <div class="comments">
