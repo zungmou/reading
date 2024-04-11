@@ -107,7 +107,7 @@ def save_to_reading(
             "-m",
             "zh-CN-YunyangNeural",
             "-o",
-            f"./_audios/{filename}.mp3",
+            f"./audios/{filename}.mp3",
         ]
     )
 
