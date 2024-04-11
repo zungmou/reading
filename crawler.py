@@ -86,7 +86,11 @@ def save_to_reading(
     assert isinstance(edition, str)
     assert isinstance(content, str)
 
-    filename = date.strftime("%Y-%m-%d-") + title
+    # 将日期与标题拼接
+    date_title = date.strftime("%Y-%m-%d-") + title
+
+    # 生成音频文件名
+    audio_filename = f"./audios/{date_title}.mp3"
 
     # 将所有的 <p>内容</p> 替换为 <p>内容</p>\n\n
     content = re.sub(
@@ -94,27 +98,33 @@ def save_to_reading(
     )
     content = clean_p(content)
 
-    with open("tts.txt", "w", encoding="utf-8") as f:
-        f.write(clean_html(content))
+    if not os.path.exists(audio_filename):
+        # 将待转换的纯文本写入临时文件
+        with open("tts.txt", "w", encoding="utf-8") as f:
+            f.write(clean_html(content))
 
-    os.makedirs("audios", exist_ok=True)
-    subprocess.run(
-        [
-            "python",
-            "tts.py",
-            "-f",
-            "tts.txt",
-            "-m",
-            "zh-CN-YunyangNeural",
-            "-o",
-            f"./audios/{filename}.mp3",
-        ]
-    )
+        # 创建音频文件夹
+        os.makedirs("audios", exist_ok=True)
 
-    os.remove("tts.txt")
+        # 调用 Python 子进程执行 TTS 转换
+        subprocess.run(
+            [
+                "python",
+                "tts.py",
+                "-f",
+                "tts.txt",
+                "-m",
+                "zh-CN-YunyangNeural",
+                "-o",
+                audio_filename,
+            ]
+        )
+
+        # 删除临时文件
+        os.remove("tts.txt")
 
     content = (
-        f'<audio src="/reading/audios/{urllib.parse.quote(filename)}.mp3" controls></audio>\n\n'
+        f'<audio id="audio" src="/reading/audios/{urllib.parse.quote(date_title)}.mp3"></audio>\n\n'
         + content
     )
     post_content = (
@@ -127,7 +137,7 @@ source: "{edition}"
         + content
     )
 
-    with open(f"./_posts/{filename}.html", "w", encoding="utf-8") as f:
+    with open(f"./_posts/{date_title}.html", "w", encoding="utf-8") as f:
         f.write(post_content)
 
 
