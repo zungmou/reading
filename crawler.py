@@ -99,12 +99,10 @@ def save_to_reading(
     )
     content = clean_p(content)
 
-    test_content = clean_html(content)
-
-    if "&nbsp;" in test_content or not os.path.exists(audio_filename):
+    if not os.path.exists(audio_filename):
         # 将待转换的纯文本写入临时文件
         with open("tts.txt", "w", encoding="utf-8") as f:
-            f.write(html.unescape(clean_html(content).replace("&nbsp;", " ")))
+            f.write(html.unescape(clean_html(content)))
 
         # 创建音频文件夹
         os.makedirs("audios", exist_ok=True)
@@ -260,7 +258,7 @@ async def crawl(session: aiohttp.ClientSession):
         "aHR0cDovL3BhcGVyLnBlb3BsZS5jb20uY24vcm1yYi9wYXBlcmluZGV4Lmh0bQ=="
     )
     start_date = datetime.date.today()
-    end_date = datetime.date(2023, 11, 25)  # start_date - datetime.timedelta(days=1)  #
+    end_date = start_date - datetime.timedelta(days=1)  # datetime.date(2023, 11, 25)  #
 
     while start_date >= end_date:
 

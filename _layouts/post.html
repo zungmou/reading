@@ -56,7 +56,7 @@ layout: default
                     element.style.backgroundColor = '#d0d3d8';
 
                     if (element.getBoundingClientRect().top < 0 || element.getBoundingClientRect().bottom > window.innerHeight) {
-                        element.scrollIntoView({ block: "end" });
+                        element.scrollIntoView({ block: "nearest" });
                     } else {
                     }
 
