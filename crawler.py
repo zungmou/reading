@@ -130,6 +130,7 @@ layout: post
 title: "{title}"
 author: "{author}"
 source: "{edition}"
+comments: true
 ---\n\n"""
         + content
     )

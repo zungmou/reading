@@ -16,7 +16,65 @@ layout: default
     <script>
         document.querySelector('#player').src = document.querySelector('#audio').src;
         标注拼音(document.querySelectorAll('article>p'))
+        function timeupdate(e) {
+            const progress = event.target.currentTime / event.target.duration;
+            const rubies = Array.from(document.querySelectorAll('ruby'));
+
+            function findIntegers(num) {
+                // Math.floor() 函数返回小于或等于一个给定数字的最大整数。
+                var leftInt = Math.floor(num);
+                // Math.ceil() 函数执行向上舍入，即它总是将一个数向上舍入为最接近的整数。
+                var rightInt = Math.ceil(num);
+
+                return [leftInt, rightInt];
+            }
+
+            function setUnderline(element) {
+                if (!element)
+                    return
+                // 设置元素的下划线样式
+                element.style.textDecoration = 'underline';
+                element.style.textDecorationColor = 'green';
+                element.style.textDecorationThickness = '2px';
+            }
+
+            function clearUnderline(element) {
+                if (!element)
+                    return
+                // 设置元素的下划线样式
+                element.style.textDecoration = 'none';
+                element.style.textDecorationColor = 'none';
+                element.style.textDecorationThickness = 'none';
+            }
+
+            const idx = findIntegers(progress * rubies.length);
+
+            setUnderline(rubies[idx[0]])
+            setUnderline(rubies[idx[1]])
+        }
+        document.getElementById('player').addEventListener('timeupdate', timeupdate);
     </script>
-    <footer>
-    </footer>
+    {% if page.comments %}
+    <div class="comments">
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://reading-3.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    {% endif %}
 </article>
