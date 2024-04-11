@@ -15,7 +15,10 @@ layout: default
 
     <script>
         document.querySelector('#player').src = document.querySelector('#audio').src;
-        标注拼音(document.querySelectorAll('article>p'))
+        标注拼音(document.querySelectorAll('article>p'));
+
+        let currentRubies = null;
+
         function timeupdate(e) {
             const progress = event.target.currentTime / event.target.duration;
             const rubies = Array.from(document.querySelectorAll('ruby'));
@@ -29,28 +32,34 @@ layout: default
                 return [leftInt, rightInt];
             }
 
-            function setUnderline(element) {
+            function setEffects(indexes) {
                 if (!element)
                     return
-                // 设置元素的下划线样式
-                element.style.textDecoration = 'underline';
-                element.style.textDecorationColor = 'green';
-                element.style.textDecorationThickness = '2px';
+
+                const elements = rubies.slice(indexes[0], indexes[1] + 1);
+
+                if (currentRubies) {
+                    for (const element of currentRubies) {
+                        // Clear the previous effects
+                        element.style.color = '';
+                        element.style.backgroundColor = '';
+                        element.querySelector('rt').style.backgroundColor = '';
+                    }
+                }
+
+                for (const element of elements) {
+                    element.style.color = '#1c1c1d';
+                    element.style.backgroundColor = '#d0d3d8';
+                    element.querySelector('rt').style.backgroundColor = '#d0d3d8';
+
+                    // 设置元素的下划线样式
+                    // element.style.textDecoration = 'underline';
+                    // element.style.textDecorationColor = 'green';
+                    // element.style.textDecorationThickness = '2px';
+                }
             }
 
-            function clearUnderline(element) {
-                if (!element)
-                    return
-                // 设置元素的下划线样式
-                element.style.textDecoration = 'none';
-                element.style.textDecorationColor = 'none';
-                element.style.textDecorationThickness = 'none';
-            }
-
-            const idx = findIntegers(progress * rubies.length);
-
-            setUnderline(rubies[idx[0]])
-            setUnderline(rubies[idx[1]])
+            setEffects(findIntegers(progress * rubies.length))
         }
         document.getElementById('player').addEventListener('timeupdate', timeupdate);
     </script>
