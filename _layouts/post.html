@@ -17,11 +17,12 @@ layout: default
         document.querySelector('#player').src = document.querySelector('#audio').src;
         标注拼音(document.querySelectorAll('article>p'));
 
-        let currentRubies = null;
+        let rt_previous = null;
 
         function timeupdate(e) {
             const progress = event.target.currentTime / event.target.duration;
-            const rubies = Array.from(document.querySelectorAll('ruby'));
+            // const rubies = Array.from(document.querySelectorAll('ruby'));
+            const rt_array = Array.from(document.querySelectorAll('rt'));
 
             function findIntegers(num) {
                 // Math.floor() 函数返回小于或等于一个给定数字的最大整数。
@@ -33,44 +34,45 @@ layout: default
             }
 
             function setEffects(indexes) {
-
-                if (currentRubies) {
-                    for (const element of currentRubies) {
-                        if (!element)
+                if (rt_previous) {
+                    for (const rt_item of rt_previous) {
+                        if (!rt_item)
                             continue;
-                        element.style.color = '';
-                        element.style.backgroundColor = '';
 
-                        const rt = element.querySelector('rt');
+                        const ruby = rt_item.parentNode;
 
-                        if (rt)
-                            rt.style.backgroundColor = '';
+                        ruby.style.color = '';
+                        ruby.style.backgroundColor = '';
+                        rt_item.style.backgroundColor = '';
                     }
                 }
-                const elements = rubies.slice(indexes[0], indexes[1] + 1);
 
-                for (const element of elements) {
-                    if (!element)
+                const rt_read = rubies.slice(indexes[0], indexes[1] + 1);
+
+                for (const rt_item of rt_read) {
+                    if (!rt_item)
                         continue;
-                    element.style.color = '#1c1c1d';
-                    element.style.backgroundColor = '#d0d3d8';
 
-                    if (element.getBoundingClientRect().top < 0 || element.getBoundingClientRect().bottom > window.innerHeight) {
-                        element.scrollIntoView({ block: "end" });
+                    const ruby = rt_item.parentNode;
+
+                    ruby.style.color = '#1c1c1d';
+                    ruby.style.backgroundColor = '#d0d3d8';
+
+                    if (ruby.getBoundingClientRect().top < 0 || ruby.getBoundingClientRect().bottom > window.innerHeight) {
+                        ruby.scrollIntoView({ block: "end" });
                         window.scrollBy(0, 32);
-                    } else {
                     }
 
-                    const rt = element.querySelector('rt');
+                    // const rt = rt_item.querySelector('rt');
 
-                    if (rt)
-                        rt.style.backgroundColor = '#d0d3d8';
+                    // if (rt)
+                    rt_item.style.backgroundColor = '#d0d3d8';
                 }
 
-                currentRubies = elements;
+                rt_previous = rt_read;
             }
 
-            setEffects(findIntegers(progress * rubies.length))
+            setEffects(findIntegers(progress * rt_array.length))
         }
         document.getElementById('player').addEventListener('timeupdate', timeupdate);
 
