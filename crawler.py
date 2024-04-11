@@ -1,5 +1,7 @@
 import contextlib
 import datetime
+import os
+import subprocess
 import urllib.parse
 import re
 import traceback
@@ -34,6 +36,11 @@ def b64text(s: str) -> str:
 # 定义一个将文本编码为 base64 的函数
 def textb64(s: str) -> str:
     return base64.b64encode(s.encode("utf-8")).decode("utf-8")
+
+
+# 定义一个清理所有 HTML 标签的函数
+def clean_html(text: str) -> str:
+    return re.sub(r"<.*?>", "", text, flags=re.S | re.IGNORECASE)
 
 
 async def create_crawl_task(callback):
@@ -79,13 +86,37 @@ def save_to_reading(
     assert isinstance(edition, str)
     assert isinstance(content, str)
 
-    filename = date.strftime("./_posts/%Y-%m-%d-") + title + ".html"
+    filename = date.strftime("%Y-%m-%d-") + title
 
     # 将所有的 <p>内容</p> 替换为 <p>内容</p>\n\n
     content = re.sub(
         r"<p>(.*?)</p>", r"<p>\1</p>\n\n", content, flags=re.S | re.IGNORECASE
     )
     content = clean_p(content)
+
+    with open("tts.txt", "w", encoding="utf-8") as f:
+        f.write(clean_html(content))
+
+    os.makedirs("_audios", exist_ok=True)
+    subprocess.run(
+        [
+            "python",
+            "tts.py",
+            "-f",
+            "tts.txt",
+            "-m",
+            "zh-CN-YunyangNeural",
+            "-o",
+            f"./_audios/{filename}.mp3",
+        ]
+    )
+
+    os.remove("tts.txt")
+
+    content = (
+        f'<audio src="/_audios/{urllib.parse.quote(filename)}.mp3" controls></audio>\n\n'
+        + content
+    )
     post_content = (
         f"""---
 layout: post
@@ -96,7 +127,7 @@ source: "{edition}"
         + content
     )
 
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(f"./_posts/{filename}.html", "w", encoding="utf-8") as f:
         f.write(post_content)
 
 
