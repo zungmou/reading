@@ -36,7 +36,8 @@ layout: default
 
                 if (currentRubies) {
                     for (const element of currentRubies) {
-                        // Clear the previous effects
+                        if (!element)
+                            continue;
                         element.style.color = '';
                         element.style.backgroundColor = '';
                         element.querySelector('rt').style.backgroundColor = '';
@@ -45,6 +46,8 @@ layout: default
                 const elements = rubies.slice(indexes[0], indexes[1] + 1);
 
                 for (const element of elements) {
+                    if (!element)
+                        continue;
                     element.style.color = '#1c1c1d';
                     element.style.backgroundColor = '#d0d3d8';
                     element.querySelector('rt').style.backgroundColor = '#d0d3d8';
