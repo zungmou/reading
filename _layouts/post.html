@@ -17,6 +17,31 @@ layout: default
         document.querySelector('#player').src = document.querySelector('#audio').src;
         标注拼音(document.querySelectorAll('article>p'));
 
+        (function () {
+            async function copyToClipboard(text) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                } catch {
+                }
+            }
+
+            document.querySelector('article>header>h1').addEventListener('click', function () {
+                let text = "{{ page.title }}\n\n";
+
+                text += "{{ page.author }} {{ page.source }}\n\n"
+
+                for (const p of Array.from(document.querySelectorAll('article>p'))) {
+
+                    if (p.querySelector('img'))
+                        continue;
+
+                    text += p.dataset.text + '\n\n';
+                }
+
+                copyToClipboard(text);
+            });
+        })()
+
         let rt_previous = null;
 
         function timeupdate(e) {

@@ -36,6 +36,8 @@ function 标注拼音(elements) {
             copyToClipboard(text);
         }.bind(p, p.textContent));
 
+
+        p.dataset.text = p.textContent;
         p.textContent = '';
 
 
