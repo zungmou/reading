@@ -97,7 +97,7 @@ def save_to_reading(
     with open("tts.txt", "w", encoding="utf-8") as f:
         f.write(clean_html(content))
 
-    os.makedirs("_audios", exist_ok=True)
+    os.makedirs("audios", exist_ok=True)
     subprocess.run(
         [
             "python",
@@ -114,7 +114,7 @@ def save_to_reading(
     os.remove("tts.txt")
 
     content = (
-        f'<audio src="/_audios/{urllib.parse.quote(filename)}.mp3" controls></audio>\n\n'
+        f'<audio src="/audios/{urllib.parse.quote(filename)}.mp3" controls></audio>\n\n'
         + content
     )
     post_content = (
