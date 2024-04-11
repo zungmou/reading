@@ -55,6 +55,11 @@ layout: default
                     element.style.color = '#1c1c1d';
                     element.style.backgroundColor = '#d0d3d8';
 
+                    if (element.getBoundingClientRect().top < 0 || element.getBoundingClientRect().bottom > window.innerHeight) {
+                        element.scrollIntoView({ block: "center" });
+                    } else {
+                    }
+
                     const rt = element.querySelector('rt');
 
                     if (rt)
