@@ -40,7 +40,7 @@ layout: default
                             continue;
                         element.style.color = '';
                         element.style.backgroundColor = '';
-                        element.querySelector('rt').style.backgroundColor = '';
+                        element.querySelector('rt')?.style.backgroundColor = '';
                     }
                 }
                 const elements = rubies.slice(indexes[0], indexes[1] + 1);
@@ -50,7 +50,7 @@ layout: default
                         continue;
                     element.style.color = '#1c1c1d';
                     element.style.backgroundColor = '#d0d3d8';
-                    element.querySelector('rt').style.backgroundColor = '#d0d3d8';
+                    element.querySelector('rt')?.style.backgroundColor = '#d0d3d8';
 
                     // 设置元素的下划线样式
                     // element.style.textDecoration = 'underline';
