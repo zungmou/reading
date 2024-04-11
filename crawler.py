@@ -114,7 +114,7 @@ def save_to_reading(
     os.remove("tts.txt")
 
     content = (
-        f'<audio src="/audios/{urllib.parse.quote(filename)}.mp3" controls></audio>\n\n'
+        f'<audio src="/reading/audios/{urllib.parse.quote(filename)}.mp3" controls></audio>\n\n'
         + content
     )
     post_content = (
