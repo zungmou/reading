@@ -56,7 +56,7 @@ layout: default
                     element.style.backgroundColor = '#d0d3d8';
 
                     if (element.getBoundingClientRect().top < 0 || element.getBoundingClientRect().bottom > window.innerHeight) {
-                        element.scrollIntoView({ block: "center" });
+                        element.scrollIntoView({ block: "end" });
                     } else {
                     }
 
@@ -64,11 +64,6 @@ layout: default
 
                     if (rt)
                         rt.style.backgroundColor = '#d0d3d8';
-
-                    // 设置元素的下划线样式
-                    // element.style.textDecoration = 'underline';
-                    // element.style.textDecorationColor = 'green';
-                    // element.style.textDecorationThickness = '2px';
                 }
 
                 currentRubies = elements;
