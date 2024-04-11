@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ site.title }}</title>
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
     <link rel="stylesheet" href="/reading/css/main.css">
     <script src="{{ site.baseurl }}/js/main.js"></script>
     <script src="{{ site.baseurl }}/js/pinyin_dict_polyphone.js"></script>
