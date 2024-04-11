@@ -181,6 +181,8 @@ body>.container>main>article>p {
     line-height: 2;
     color: #d0d3d8;
     margin: 1em auto;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 body>.container>main>article>p>span {
