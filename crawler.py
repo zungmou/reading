@@ -123,10 +123,7 @@ def save_to_reading(
         # 删除临时文件
         os.remove("tts.txt")
 
-    content = (
-        f'<audio id="audio" src="/reading/audios/{urllib.parse.quote(date_title)}.mp3"></audio>\n\n'
-        + content
-    )
+    content += f'<audio id="audio" src="/reading/audios/{urllib.parse.quote(date_title)}.mp3"></audio>\n\n'
     post_content = (
         f"""---
 layout: post
