@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 50)
 });
 
-const 标点符号 = '，。！？；：、（）《》“”‘’——…—·「」『』〈〉〔〕【】〖〗〘〙〚〛～1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const 标点符号 = '，。！？；：、（）《》“”‘’——…—·「」『』〈〉〔〕【】〖〗〘〙〚〛～abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 async function copyToClipboard(text) {
     try {
@@ -53,7 +53,8 @@ function 标注拼音(elements) {
                 rp.textContent = '(';
                 ruby.appendChild(rp);
                 const rt = document.createElement('rt');
-                rt.textContent = pinyin;
+                if (!'1234567890'.includes(c))
+                    rt.textContent = pinyin;
                 ruby.appendChild(rt);
                 rp = document.createElement('rp');
                 rp.textContent = ')';
