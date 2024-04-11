@@ -32,11 +32,12 @@ function 标注拼音(elements) {
             continue;
         }
 
-        p.textContent = '';
-
         p.addEventListener('click', function (text) {
             copyToClipboard(text);
         }.bind(p, p.textContent));
+
+        p.textContent = '';
+
 
         for (const c of chars) {
             const ruby = document.createElement('ruby');
