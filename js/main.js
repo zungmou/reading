@@ -34,9 +34,9 @@ function 标注拼音(elements) {
 
         p.textContent = '';
 
-        p.addEventListener('click', function () {
-            copyToClipboard(this.textContent);
-        }.bind(p));
+        p.addEventListener('click', function (text) {
+            copyToClipboard(text);
+        }.bind(p, p.textContent));
 
         for (const c of chars) {
             const ruby = document.createElement('ruby');
