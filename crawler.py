@@ -1,5 +1,6 @@
 import contextlib
 import datetime
+import html
 import os
 import subprocess
 import urllib.parse
@@ -98,10 +99,12 @@ def save_to_reading(
     )
     content = clean_p(content)
 
-    if not os.path.exists(audio_filename):
+    test_content = clean_html(content)
+
+    if "&nbsp;" in test_content or not os.path.exists(audio_filename):
         # 将待转换的纯文本写入临时文件
         with open("tts.txt", "w", encoding="utf-8") as f:
-            f.write(clean_html(content))
+            f.write(html.unescape(clean_html(content).replace("&nbsp;", " ")))
 
         # 创建音频文件夹
         os.makedirs("audios", exist_ok=True)
