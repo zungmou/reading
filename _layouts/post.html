@@ -5,7 +5,7 @@ layout: default
 <article>
     <header>
         <h1>{{ page.title }}</h1>
-        <p>{% if page.previous.url %}<a href="{{ site.baseurl }}/{{ page.previous.url }}" style="color:red">上一篇</a>{% endif %}{% if page.next.url %}<a href="{{ site.baseurl }}/{{ page.next.url }}" style="color:red">下一篇</a>{% endif %}</p>
+        <p>{% if page.previous.url %}<a href="{{ site.baseurl }}{{ page.previous.url }}" style="color:red">上一篇</a>{% endif %}{% if page.next.url %}<a href="{{ site.baseurl }}{{ page.next.url }}" style="color:red">下一篇</a>{% endif %}</p>
         <p><span>{{ page.author }}</span><time class="date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y年%m月%d日" }}</time></p>
         <p>{{ page.source }}</p>
         <p><audio id="player" controls></audio></p>
