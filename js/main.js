@@ -23,7 +23,7 @@ async function copyToClipboard(text) {
     }
 }
 
-function 标注拼音(elements) {
+function annotate_pinyin(elements) {
     for (const p of elements) {
         const chars = p.textContent.split('');
 
@@ -41,30 +41,25 @@ function 标注拼音(elements) {
         p.textContent = '';
 
 
-        for (const c of chars) {
+        for (const char of chars) {
             const ruby = document.createElement('ruby');
+            const span = document.createElement('span');
 
-            ruby.innerText = c;
+            span.innerText = char;
+            ruby.appendChild(span);
 
-            if (!标点符号.includes(c)) {
-                const pinyin = pinyinUtil.getPinyin(c, ' ', true, true);
-
-                ruby.textContent = c;
-
+            if (!标点符号.includes(char)) {
+                const pinyin = pinyinUtil.getPinyin(char, ' ', true, true);
                 let rp = document.createElement('rp');
                 rp.textContent = '(';
                 ruby.appendChild(rp);
                 const rt = document.createElement('rt');
-                if (!'1234567890'.includes(c))
+                if (!'1234567890'.includes(char))
                     rt.textContent = pinyin;
                 ruby.appendChild(rt);
                 rp = document.createElement('rp');
                 rp.textContent = ')';
                 ruby.appendChild(rp);
-
-                // ruby.addEventListener('click', function () {
-
-                // }.bind(pinyin));
             }
 
             p.appendChild(ruby);
