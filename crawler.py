@@ -1,15 +1,16 @@
+import asyncio
+import base64
 import contextlib
 import datetime
 import html
-import os
-import subprocess
-import urllib.parse
-import re
-import traceback
-import aiohttp
-import asyncio
 import logging
-import base64
+import os
+import re
+import subprocess
+import traceback
+import urllib.parse
+
+import aiohttp
 
 logger = logging.getLogger(__name__)
 
@@ -153,6 +154,7 @@ async def crawl(session: aiohttp.ClientSession):
             if match := re.search(r"<h1>(.*?)</h1>", text, flags=re.S | re.IGNORECASE):
                 title = match.group(1)
                 title = title.strip()
+                title = re.sub(r"<[^>]*?>", "", title)
             else:
                 title = "未知标题"
 
