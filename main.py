@@ -2,11 +2,14 @@ import asyncio
 import base64
 import contextlib
 import datetime
-import html
+
+# import html
 import logging
-import os
+
+# import os
 import re
-import subprocess
+
+# import subprocess
 import traceback
 import urllib.parse
 
@@ -398,7 +401,7 @@ async def scrape(session: aiohttp.ClientSession):
 
         return items
 
-    date = datetime.date(2024, 12, 1)  # - datetime.timedelta(days=1)
+    date = datetime.datetime.now().date() - datetime.timedelta(days=1)
 
     while date <= datetime.date.today():
         logger.info(f'正在爬取 {date.strftime("%Y-%m-%d")} 的报纸')
