@@ -1,229 +1,77 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <script>
-        /**
-         * Returns a random integer between min (inclusive) and max (inclusive).
-         * The value is no lower than min (or the next integer greater than min
-         * if min isn't an integer) and no greater than max (or the next integer
-         * lower than max if max isn't an integer).
-         * Using Math.round() will give you a non-uniform distribution!
-         */
-
-        let correct = 0;
-        let incorrect = 0;
-
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        function getStart() {
-            let iptFrom = document.getElementById('from');
-            let iptTo = document.getElementById('to');
-            let X = getRandomInt(iptFrom.value, iptTo.value);
-            let Y = getRandomInt(iptFrom.value, iptTo.value);
-            let R = Math.random() < 0.5;
-
-            document.getElementById('symbol').innerText = R ? '-' : '+';
-            document.getElementById('numberA').innerText = X;
-            document.getElementById('numberB').innerText = Y;
-            document.getElementById('answer').result = X + (R ? -Y : Y);
-            document.getElementById('answer').value = '';
-        }
-
-        let lastIncorrect = null;
-
-        function submit() {
-            let answer = document.getElementById('answer');
-
-            if (answer.value === '') {
-                return;
-            } else if (answer.value == answer.result) {
-                correct++;
-                getStart();
-            } else {
-                if (lastIncorrect === answer.value)
-                    return;
-
-                incorrect++;
-                lastIncorrect = answer.value;
-            }
-
-            if (incorrect > 0 || correct > 0)
-                document.getElementById('score').innerText = (correct / (correct + incorrect) * 100).toFixed(2);
-        }
-    </script>
+    <title>老人数学练习</title>
     <style>
-        body {
-            margin: 0;
-            font-size: 30px;
-        }
-
-        .button {
-            margin: 0;
-            padding: 0.25em 0;
-            text-align: center;
-            border-bottom: 1px solid #c1c1c1;
-            background-color: #f0f0f0;
-        }
-
-        .button button {
-            font-size: 1em;
-            padding: 0.25em 0.5em;
-        }
-
-        form.settings {
-            font-size: 1em;
-        }
-
-        form.settings label {
-            margin-right: 0.5em;
-        }
-
-        form.settings input[type=number] {
-            width: 2.5em;
-            font-size: inherit;
-        }
-
-        ul#keyboard {
-            margin: 0 auto;
-            padding: 0;
-            font-family: 'Consolas';
-            text-align: center;
-        }
-
-        ul#keyboard li {
-            width: 100px;
-
-            margin: 0 0 0.25em 0;
-            padding: 0.20em 0 0.20em 0;
-
-            display: inline-block;
-            text-align: center;
-
-            list-style: none;
-            cursor: pointer;
-
-            border-radius: 10px;
-
-            font-size: 2em;
-            color: black;
-            background-color: #e1e1e1;
-        }
-
-        #score {
-            margin: 0.25em 0 0 0;
-            font-size: 1em;
-            color: red;
-        }
-
-        table.formula {
-            width: 100%;
-            margin: 0 0 0.5em 0;
-            border-top: 1px solid #efefef;
-            border-bottom: 1px solid #c1c1c1;
-            background-color: #f0f0f0;
-        }
-
-        td.formula {
-            font-size: 2.5em;
-        }
-
-        td.symbol {
-            width: 2em;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        td.number {
-            width: 2em;
-            text-align: right;
-        }
-
-        #answer {
-            width: 100%;
-            font-size: 1em;
-            border: none;
-            background-color: #f0f0f0;
-        }
+        body { font-family: sans-serif; margin: 0; padding: 20px; background-color: #f9f9f9; text-align: center; color: #333; }
+        .card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .problem { font-size: 4rem; font-weight: bold; margin: 20px 0; color: #2c3e50; }
+        #answer { font-size: 3rem; width: 120px; text-align: center; border: 2px solid #ddd; border-radius: 10px; padding: 10px; margin: 10px 0; outline: none; }
+        .btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+        button { font-size: 2rem; padding: 20px; border: none; border-radius: 15px; background: #e0e0e0; cursor: pointer; transition: background 0.2s; }
+        button:active { background: #d0d0d0; }
+        .btn-confirm { background: #4caf50; color: white; grid-column: span 2; }
+        .btn-clear { background: #f44336; color: white; }
+        #score { font-size: 1.2rem; margin-top: 10px; color: #666; }
     </style>
 </head>
-
 <body>
-    <div class="button">
-        <button onclick="getStart()" type="button">做题</button>
-        <button onclick="submit()" type="button">提交</button>
-        <div id="score"></div>
-    </div>
-    <table class="formula">
-        <tbody>
-            <tr>
-                <td rowspan="2" class="formula symbol" id="symbol"></td>
-                <td class="formula number" id="numberA"></td class="formula">
-                <td rowspan="2" class="formula symbol">=</td>
-                <td rowspan="2" class="formula">
-                    <input id="answer" readonly></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="formula number" id="numberB"></td class="formula">
-            </tr>
-        </tbody>
-    </table>
-    <ul id="keyboard">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>-</li>
-        <li>0</li>
-        <li>C</li>
-    </ul>
-    <script>
-        (function () {
-            let keyboard = document.getElementById('keyboard');
-            let answer = document.getElementById('answer');
 
-            for (let li of keyboard.childNodes) {
-                if (li.nodeName === 'LI') {
-                    li.addEventListener('click', function () {
-                        let btnText = this.innerText;
-                        let ansText = answer.value;
+<div class="card">
+    <div id="score">答对：0 题</div>
+    <div class="problem" id="problem">0 + 0 = ?</div>
+    <div id="answer-display" style="font-size: 3rem; height: 3.5rem; line-height: 3.5rem; border: 2px solid #ddd; border-radius: 10px; margin: 10px 0; color: #333;"></div>
+    <div id="feedback" style="height: 1.5rem; margin-top: 10px; color: #f44336; font-weight: bold;"></div>
+</div>
 
-                        if (btnText === 'C') {
-                            answer.value = '';
-                        } else if (btnText === '-') {
-                            answer.value = 0 - answer.value;
-                        } else if (btnText === '0' && (ansText === '' || ansText === '0')) {
-                            answer.value = '0';
-                        } else {
-                            if (btnText !== '0' && ansText === '0')
-                                answer.value = '';
-                            answer.value += btnText;
-                        }
-                    });
-                }
-            }
-        })();
-    </script>
-    <form class="settings">
-        <fieldset>
-            <legend>设置</legend>
-            <div>
-                <label for="from">从</label><input id="from" type="number" value="0">
-                <label for="to">到</label><input id="to" type="number" value="100">
-            </div>
-        </fieldset>
-    </form>
+<div class="btn-row">
+    <button onclick="inputNum(1)">1</button><button onclick="inputNum(2)">2</button><button onclick="inputNum(3)">3</button>
+    <button onclick="inputNum(4)">4</button><button onclick="inputNum(5)">5</button><button onclick="inputNum(6)">6</button>
+    <button onclick="inputNum(7)">7</button><button onclick="inputNum(8)">8</button><button onclick="inputNum(9)">9</button>
+    <button onclick="clearAns()" class="btn-clear">清除</button><button onclick="inputNum(0)">0</button><button onclick="submit()" class="btn-confirm">确定</button>
+</div>
+
+<script>
+    let num1, num2, op, result, correctCount = 0;
+    
+    function generate() {
+        num1 = Math.floor(Math.random() * 101);
+        num2 = Math.floor(Math.random() * 101);
+        op = Math.random() > 0.5 ? '+' : '-';
+        if (op === '-' && num1 < num2) [num1, num2] = [num2, num1];
+        result = op === '+' ? num1 + num2 : num1 - num2;
+        document.getElementById('problem').innerText = `${num1} ${op} ${num2} = ?`;
+        document.getElementById('answer-display').innerText = '';
+        document.getElementById('feedback').innerText = '';
+    }
+
+    function inputNum(n) {
+        let el = document.getElementById('answer-display');
+        if (el.innerText.length < 3) {
+            el.innerText += n;
+            document.getElementById('feedback').innerText = '';
+        }
+    }
+
+    function clearAns() { 
+        document.getElementById('answer-display').innerText = ''; 
+        document.getElementById('feedback').innerText = '';
+    }
+
+    function submit() {
+        let val = document.getElementById('answer-display').innerText;
+        if (val !== '' && parseInt(val) === result) {
+            correctCount++;
+            document.getElementById('score').innerText = '答对：' + correctCount + ' 题';
+            generate();
+        } else {
+            document.getElementById('feedback').innerText = '不对哦，再试试';
+            document.getElementById('answer-display').innerText = '';
+        }
+    }
+    generate();
+</script>
 </body>
-
 </html>
